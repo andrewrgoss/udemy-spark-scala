@@ -1,4 +1,4 @@
-name := "udemy-spark-scala"
+name := "getting_started"
 
 version := "0.1"
 
