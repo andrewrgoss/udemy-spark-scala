@@ -27,10 +27,8 @@ object MaxPrecipitation {
     val precipitationAmt = parsedLines.filter(x => x._2 == "PRCP")
     val datePrcp = precipitationAmt.map(x => (x._1, x._3.toInt))
 
-    // Convert RDD to map, to use maxBy method
-    val datePrcpMap = datePrcp.collectAsMap()
-    val maxPrcpAmt = datePrcpMap.maxBy(_._2) // max temp, returned with key (date)
-
+    val maxPrcpAmt = datePrcp.reduce((x, y) => if(x._2 > y._2) x else y) // Max precipitation
+    // returned as tuple with date key
     printf("The date with the most precipitation is: %s, with a precipitation amount of: %s",
       maxPrcpAmt._1, maxPrcpAmt._2)
   }
