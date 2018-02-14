@@ -11,12 +11,10 @@ import org.apache.log4j._
 
 object CustomerOrders {
 
-  def parseLine(line:String)= {
+  /** Convert input data to (customerID, amountSpent) tuples */
+  def extractCustomerPricePairs(line: String) = {
     val fields = line.split(",")
-    val customerID = fields(0).toInt
-    val itemID = fields(1).toInt
-    val spendAmt = fields(2).toFloat
-    (customerID, itemID, spendAmt)
+    (fields(0).toInt, fields(2).toFloat)
   }
 
   /** Our main function where the action happens */
@@ -29,11 +27,26 @@ object CustomerOrders {
     val sc = new SparkContext("local[*]", "CustomerOrders")
 
     // Read each line of input data
-    val lines = sc.textFile("../simple_examples/datasets/customer-orders.csv")
+    val input = sc.textFile("../learning_exercises/datasets/customer-orders.csv")
 
-    // Convert to tuples
-    val parsedLines = lines.map(parseLine)
-    
+    // Convert tuple to RDD key-value pair
+    val mappedInput = input.map(extractCustomerPricePairs)
+
+    // Reduce by customerID and sum the amount ordered by each customer
+    val custOrders = mappedInput.reduceByKey((x, y) => x + y) // Combines values with the same key
+
+    // Flip (customerID, amtSpent) tuples to (amtSpent, customerID) and then sort by key (the amount spent)
+    val custAmtSpent = custOrders.map(x => (x._2, x._1)).sortByKey()
+
+    // Print the results, flipping back (amtSpent, customerID) results to customerID: amtSpent
+    val results = custAmtSpent.collect()
+
+    for (result <- results.sorted) {
+      val custAmtSpent = result._1
+      val customerID = result._2
+      println(s"customer ID: $customerID -- purchase total: $custAmtSpent")
+    }
+
   }
 
 }
