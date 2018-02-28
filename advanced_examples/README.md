@@ -1,4 +1,6 @@
-# udemy-spark-scala >> advanced_examples
+# udemy-spark-scala > advanced_examples
+
+#### MovieSimilarities 
 
 To compile a .jar file in IntelliJ IDEA with SBT, use the sbt shell 'package' command:
 
@@ -26,7 +28,7 @@ libraryDependencies += "org.apache.spark" %% "spark-core" % "2.2.1"
 
 https://index.scala-lang.org/apache/spark/spark-core/2.2.1?target=_2.11
 
-To run:
+To run (parameter 50 represents the movie ID for Star Wars):
 
 ```
 :advanced_examples andgoss$ spark-submit --class com.andrewrgoss.spark.MovieSimilarities target/scala-2.11/advanced_examples_2.11-0.1.jar 50
@@ -46,3 +48,12 @@ Sting, The (1973)       score: 0.9751512937740359       strength: 204
 Wrong Trousers, The (1993)      score: 0.9748681355460885       strength: 103
 Wallace & Gromit: The Best of Aardman Animation (1996)  score: 0.9741816128302572       strength: 58
 ```
+
+
+#### Improve the Results
+* Some ideas to try:
+    * Discard bad ratings - only recommend good movies (enforce minimum threshold for ratings score)
+    * Adjust thresholds for minimum co-raters or minimum score
+    * Invent a new similarity metric that takes the number of co-raters into account
+    * Use genre information in u.items to boost scores from movies in the same genre
+    
