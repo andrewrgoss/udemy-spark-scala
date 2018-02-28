@@ -1,7 +1,7 @@
 package com.andrewrgoss.spark
 
-import org.apache.spark._
 import org.apache.log4j._
+import org.apache.spark._
 
 /** Self-challenge idea: print out the top 10 most popular superheroes, and the 10 least popular superheroes */
 /** Find the superhero with the most co-appearances. */

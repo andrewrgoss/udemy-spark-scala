@@ -1,7 +1,7 @@
 package com.andrewrgoss.spark
 
-import org.apache.spark._
 import org.apache.log4j._
+import org.apache.spark._
 
 /** Find the movies with the most ratings. */
 object PopularMovies {
