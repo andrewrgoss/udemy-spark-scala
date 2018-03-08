@@ -9,9 +9,9 @@ import scala.math.sqrt
 
 
 // To run on EMR successfully + output results for Star Wars:
-// aws s3 cp s3://sundog-spark/MovieSimilarities1M.jar ./
-// aws s3 cp s3://sundog-spark/ml-1m/movies.dat ./
-// spark-submit --executor-memory 1g MovieSimilarities1M.jar 260
+// aws s3 cp s3://ag-spark/MovieSimilarities1M.jar ./
+// aws s3 cp s3://ag-spark/ml-1m/movies.dat ./
+// spark-submit --class com.andrewrgoss.spark.MovieSimilarities1M MovieSimilarities1M.jar 260
 
 
 object MovieSimilarities1M {
@@ -107,7 +107,7 @@ object MovieSimilarities1M {
     println("\nLoading movie names...")
     val nameDict = loadMovieNames()
     
-    val data = sc.textFile("s3n://sundog-spark/ml-1m/ratings.dat")
+    val data = sc.textFile("s3n://ag-spark/ml-1m/ratings.dat")
 
     // Map ratings to key / value pairs: user ID => movie ID, rating
     val ratings = data.map(l => l.split("::")).map(l => (l(0).toInt, (l(1).toInt, l(2).toDouble)))
