@@ -123,6 +123,7 @@ object MovieSimilarities1M {
 
     // Now key by (movie1, movie2) pairs.
     val moviePairs = uniqueJoinedRatings.map(makePairs).partitionBy(new HashPartitioner(100))
+    // Optimizing for running on a cluster = partitioning. partitionBy(100) is a reasonable place to start for large operations.
 
     // We now have (movie1, movie2) => (rating1, rating2)
     // Now collect all ratings for each movie pair and compute similarity
