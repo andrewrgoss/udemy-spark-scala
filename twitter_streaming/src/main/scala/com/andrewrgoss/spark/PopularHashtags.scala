@@ -15,7 +15,7 @@ object PopularHashtags {
     rootLogger.setLevel(Level.ERROR)   
   }
   
-  /** Configures Twitter service credentials using twiter.txt in the main workspace directory */
+  /** Configures Twitter service credentials using twitter.txt in the main workspace directory */
   def setupTwitter() = {
     import scala.io.Source
     
@@ -75,5 +75,5 @@ object PopularHashtags {
 }
 
 /** Self-challenge ideas */
-// most popular word tweeted in general
+// most popular words tweeted in general
 // most popular tweet length
